@@ -1,14 +1,47 @@
 <!doctype html>
 <html>
-<head></head>
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <title>math game</title>
+</head>
 <body>
-	
+<div class="container-fluid">
+
+
+
 <h1>Game on</h1>
-<div  id="targetDiv"></div>
+
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">Enter first numbers</span>
+        <input id="topNumber" type="number" class="form-control" placeholder="ex. 0,1, 2, 3, 4, 5" aria-describedby="basic-addon1">
+    </div>
+    <br />
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon2">Enter second numbers</span>
+        <input id="bottomNumber" type="text" class="form-control" placeholder="ex. 11, 12" aria-describedby="basic-addon2">
+    </div>
+    <br />
+    <button id="setValues" class="btn btn-primary btn-lg">set number ranges</button>
+
+<div class="class="jumbotron">
+    
+ <div  id="targetDiv" class="h1"></div>
+</div>
 <div id="coinTotal"></div>
-<input type="text" id="answerBox"/>	<button id="sendAnswer">answer</button>
+<input type="text" id="answerBox" class="form-control" />	<button id="sendAnswer" class="btn btn-primary btn-lg">answer</button>
 
 <div id="results"></div>
+</div>
+<div id="reacttest"></div>
+
 <script>
 	
 	//helpers //
@@ -22,15 +55,35 @@
 var td = document.getElementById('targetDiv');
 var results = document.getElementById('results');
 var topNumber = [9,10];
-var bottomNumber = [0,1];
+var bottomNumber = [0, 1];
+
 var ab = document.getElementById('answerBox');
-var usedCombos = ['0 x 0'];
+var usedCombos = [];
 var sa = document.getElementById('sendAnswer');
 var currentProblem = [];
 
 if(!localStorage.coinCount) localStorage.setItem('coinCount', 0);
 var coinCount = localStorage.coinCount;
+    //set listener to button so that you can set range
 
+var setRange = function () {
+    //set up numbers from DOM
+    var topNumFree = document.getElementById('topNumber').value.split(',');
+    var buttomNumFree = document.getElementById('bottomNumber').value.split(',');
+    topNumber = [];
+    for (var i = 0;topNumFree.length > 0; i++) {
+        topNumber.push(topNumFree.pop());
+    }
+    bottomNumber = [];
+    for (var i = 0; buttomNumFree.length > 0; i++) {
+        bottomNumber.push(buttomNumFree.pop());
+    }
+
+    usedCombos = [];
+    chooseProblem();
+
+
+};
 
     //this is where we pick the values for the problem
 var setValueArray = function () {
@@ -56,7 +109,7 @@ var chooseProblem = function(){
         //turn values into sring to compare to used answers
 	    curValueStr = problemToString(curValue);
     //you know you have tried all the options when your array is the same size as the option set
-	    if (usedCombos.length > counterMax) {
+	    if (usedCombos.length == counterMax) {
 	        alert('you win');
             return
 	    }
@@ -112,13 +165,19 @@ var coinCounter = function () {
 };
 
 sa.addEventListener('click', calculate);
+document.getElementById('setValues').addEventListener('click', setRange);
+
 //ab.addEventListener('submit', calculate);
 //setups
 chooseProblem();
 coinCounter();
 ab.focus();
 </script>	
-	
+    <!-- The core React library -->
+    <script src="https://fb.me/react-0.14.0.js"></script>
+    <!-- The ReactDOM Library -->
+    <script src="https://fb.me/react-dom-0.14.0.js"></script>
+    <script src="reactcode.js"></script>
 </body>
 	
 </html>
