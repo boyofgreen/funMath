@@ -2,38 +2,93 @@
 <html>
 <head>
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
+    <style>
+        html {
+        color: white;
+        background-color:#3DC0F1;
+        }
+        .input-field input, .input-field label {
+            color: white;
+            border-color:white;
+        }
+            input[type=text]:not([readonly]):focus, input[type=password]:not([readonly]):focus, input[type=email]:not([readonly]):focus, input[type=url]:not([readonly]):focus, input[type=time]:not([readonly]):focus, input[type=date]:not([readonly]):focus, input[type=datetime-local]:not([readonly]):focus, input[type=tel]:not([readonly]):focus, input[type=number]:not([readonly]):focus, input[type=search]:not([readonly]):focus, textarea:not([readonly]).materialize-textarea:focus {
+            border-color: yellow;
+            }
 
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    </style>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
+
     <title>math game</title>
 </head>
 <body>
-<div class="container-fluid">
+<div class="container center">
 
-
-
-<h1>Game on</h1>
-
-    <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1">Enter first numbers</span>
-        <input id="topNumber" type="number" class="form-control" placeholder="ex. 0,1, 2, 3, 4, 5" aria-describedby="basic-addon1">
+    <div class="row">
+        <div class="input-field col s12">
+            <label for="topNumber" id="basic-addon1">Enter first numbers</label>
+            <input id="topNumber" type="number" class="form-control" placeholder="ex. 0,1, 2, 3, 4, 5" aria-describedby="basic-addon1">
+        </div>
     </div>
     <br />
-    <div class="input-group">
-        <span class="input-group-addon" id="basic-addon2">Enter second numbers</span>
-        <input id="bottomNumber" type="text" class="form-control" placeholder="ex. 11, 12" aria-describedby="basic-addon2">
+    <div class="row">
+        <div class="input-field col s12">
+            <label for="bottomNumber" id="basic-addon2">Enter second numbers</label>
+            <input id="bottomNumber" type="text" class="form-control" placeholder="ex. 11, 12" aria-describedby="basic-addon2">
+        </div>
     </div>
-    <br />
     <button id="setValues" class="btn btn-primary btn-lg">set number ranges</button>
+</div>
+<div class="container center">
+<div class="row">
+    <div class="col s12 m3">
+        <div class="card white darken-1">
+            <div class="card-content black-text">
+                <p id="firstNumberBox" class="boxNumber">
+                    
+                </p>
+            </div>
+        </div>
+    </div>
 
-<div class="class="jumbotron">
-    
- <div  id="targetDiv" class="h1"></div>
+    <div class="col s12 m2">
+        <div class="card white darken-1">
+            <div class="card-content black-text">
+                <p id="factorateBox">
+                    x
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col s12 m3">
+        <div class="card white darken-1">
+            <div class="card-content black-text">
+                <p id="secondNumberBox" class="boxNumber">
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col s12 m2">
+        <div class="card white darken-1">
+            <div class="card-content black-text">
+                <p id="equals">
+                    =
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+ <div id="factorateBox"></div>
+ <div id="SecondNumberBox"></div>
 </div>
 <div id="coinTotal"></div>
 <input type="text" id="answerBox" class="form-control" />	<button id="sendAnswer" class="btn btn-primary btn-lg">answer</button>
@@ -129,7 +184,9 @@ var chooseProblem = function(){
     printProblem(currentProblem);
 };
 var printProblem = function(problem){
-	td.innerHTML = problemToString(problem);
+    //targ.innerHTML = problem;
+    document.getElementById('firstNumberBox').innerHTML = problem[0];
+    document.getElementById('secondNumberBox').innerHTML = problem[1];
 		
 	
 }
@@ -173,11 +230,7 @@ chooseProblem();
 coinCounter();
 ab.focus();
 </script>	
-    <!-- The core React library -->
-    <script src="https://fb.me/react-0.14.0.js"></script>
-    <!-- The ReactDOM Library -->
-    <script src="https://fb.me/react-dom-0.14.0.js"></script>
-    <script src="reactcode.js"></script>
+
 </body>
 	
 </html>
