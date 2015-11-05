@@ -4,232 +4,340 @@
     <!-- Latest compiled and minified CSS -->
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="jquery.fullPage.css" />
+
+  
+
+
+
+
+
+    <link href="animate.css" rel="stylesheet" />
     <style>
         html {
-        color: white;
+        xcolor: white;
         background-color:#3DC0F1;
         }
-        .input-field input, .input-field label {
-            color: white;
-            border-color:white;
-        }
+
             input[type=text]:not([readonly]):focus, input[type=password]:not([readonly]):focus, input[type=email]:not([readonly]):focus, input[type=url]:not([readonly]):focus, input[type=time]:not([readonly]):focus, input[type=date]:not([readonly]):focus, input[type=datetime-local]:not([readonly]):focus, input[type=tel]:not([readonly]):focus, input[type=number]:not([readonly]):focus, input[type=search]:not([readonly]):focus, textarea:not([readonly]).materialize-textarea:focus {
             border-color: yellow;
             }
+        .boxNumber, .answerBox input {
+        font-size:7em;
+        height: auto;
+        }
+        .factorBox {
+            font-size:3em;
+        }
 
+        .groupBox {
+        position: absolute;
+        top:0;
+        }
     </style>
 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
+
 
     <title>math game</title>
 </head>
 <body>
-<div class="container center">
+    <div id="fullpage" class="fullpage-wrapper">
+        <div class="section" id="settings">
 
-    <div class="row">
-        <div class="input-field col s12">
-            <label for="topNumber" id="basic-addon1">Enter first numbers</label>
-            <input id="topNumber" type="number" class="form-control" placeholder="ex. 0,1, 2, 3, 4, 5" aria-describedby="basic-addon1">
+            <div class="container center ">
+                <div class="row">
+                    <div class="col s12">
+                        <div class="card-panel">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <label for="topNumber" id="basic-addon1">Enter first numbers</label>
+                                    <input id="topNumber" type="text" class="form-control" placeholder="ex. 0, 1, 2, 3, 4, 5" aria-describedby="basic-addon1" />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <label for="bottomNumber" id="basic-addon2">Enter second numbers</label>
+                                    <input id="bottomNumber" type="text" class="form-control" placeholder="ex. 11, 12" aria-describedby="basic-addon2" />
+                                </div>
+                            </div>
+                            <button id="setValues" class="btn btn-primary btn-lg">set number ranges</button>
+                            <a href="/#secondPage" class="btn btn-primary btn-lg"> close settings</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-    </div>
-    <br />
-    <div class="row">
-        <div class="input-field col s12">
-            <label for="bottomNumber" id="basic-addon2">Enter second numbers</label>
-            <input id="bottomNumber" type="text" class="form-control" placeholder="ex. 11, 12" aria-describedby="basic-addon2">
+
+        <div class="section active" id="learning">
+
+            <div class="container center  ">
+                <div class="row">
+                    <div class="col s12 m3">
+                        <div class="card white darken-1 animated" id="firstBox">
+                            <div class="card-content black-text">
+                                <p id="firstNumberBox" class="boxNumber ">
+
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col s12 m1 ">
+                        <div class="card white darken-1">
+                            <div class="card-content black-text">
+                                <p id="factorateBox" class="factorBox">
+                                    x
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col s12 m3">
+                        <div class="card white darken-1 animated" id="secondBox">
+                            <div class="card-content black-text">
+                                <p id="secondNumberBox" class="boxNumber ">
+
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col s12 m1">
+                        <div class="card white darken-1">
+                            <div class="card-content black-text">
+                                <p id="equals" class="factorBox">
+                                    =
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col s12 m3">
+                        <div class="card white darken-1">
+                            <div class="card-content black-text">
+                                <p id="answerCard" class="answerBox">
+                                    <input type="text" id="answerBox" class="form-control" />
+                                    <button id="sendAnswer" class="btn btn-primary btn-lg">answer</button>
+
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="container center">
+                    <div class="row">
+                        <div class="chip" id="coinTotal">
+                        </div>
+                        <div class="chip" id="setup">
+                            <a href="/#firstPage">  setup</a>
+                        </div>
+                        <div class="chip" id="play">
+                            play
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="results"></div>
+            </div>
         </div>
-    </div>
-    <button id="setValues" class="btn btn-primary btn-lg">set number ranges</button>
 </div>
-<div class="container center">
-<div class="row">
-    <div class="col s12 m3">
-        <div class="card white darken-1">
-            <div class="card-content black-text">
-                <p id="firstNumberBox" class="boxNumber">
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <!-- This following line is only necessary in the case of using the plugin option `scrollOverflow:true` -->
+        <script type="text/javascript" src="vendors/jquery.slimscroll.min.js"></script>
+
+        <script type="text/javascript" src="jquery.fullPage.js"></script>
+
+  
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
+
+        <!-- This following line is optional. Only necessary if you use the option css3:false and you want to use other easing effects rather than "linear", "swing" or "easeInOutCubic". -->
+        <script src="vendors/jquery.easings.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#fullpage').fullpage({
+                    anchors: ['firstPage', 'secondPage']
+                });
+            });
+
+
+            //UI behavior
+            var setup = document.getElementById('setup');
+            var settings = document.getElementById('settings')
+            var learning = document.getElementById('learning');
+            var firstBox = document.getElementById('firstBox');
+            var secondBox = document.getElementById('secondBox');
+
+            setup.addEventListener('click', function () {
+
+
+            });
+
+        </script>
+
+        <script>
+
+            //helpers //
+
+            Array.prototype.randomPosition = function () {
+                return this[Math.floor(Math.random() * this.length)]
+            }
+
+            //end helpers//
+
+            var td = document.getElementById('targetDiv');
+            var results = document.getElementById('results');
+            var topNumber = [9, 10];
+            var bottomNumber = [0, 1];
+
+            var ab = document.getElementById('answerBox');
+            var usedCombos = [];
+            var sa = document.getElementById('sendAnswer');
+            var currentProblem = [];
+
+            if (!localStorage.coinCount) localStorage.setItem('coinCount', 0);
+            var coinCount = localStorage.coinCount;
+            //set listener to button so that you can set range
+
+            var setRange = function () {
+                //set up numbers from DOM
+                var topNumFree = document.getElementById('topNumber').value.split(',');
+                var buttomNumFree = document.getElementById('bottomNumber').value.split(',');
+                topNumber = [];
+                for (var i = 0; topNumFree.length > 0; i++) {
+                    topNumber.push(topNumFree.pop());
+                }
+                bottomNumber = [];
+                for (var i = 0; buttomNumFree.length > 0; i++) {
+                    bottomNumber.push(buttomNumFree.pop());
+                }
+
+                usedCombos = [];
+                chooseProblem();
+
+
+            };
+
+            //this is where we pick the values for the problem
+            var setValueArray = function () {
+                //make random number picks
+                currentProblem = [];
+                currentProblem.push(topNumber.randomPosition());
+                currentProblem.push(bottomNumber.randomPosition());
+                return currentProblem;
+            }
+
+            var chooseProblem = function () {
+
+
+                //add loop counter to make sure you get them all but don't loop for ever
+                //var loopCounter = 0;
+                var counterMax = topNumber.length * bottomNumber.length;
+                //loop through the used answers to make sure none of them match the current one
+                //you will need to reset toe used answers array if you want to start a new round
+                //pick a problem
+                var curValue = [];
+                curValue = setValueArray();
+                //var curValueStr = '';
+                //turn values into sring to compare to used answers
+                curValueStr = problemToString(curValue);
+                //you know you have tried all the options when your array is the same size as the option set
+                if (usedCombos.length == counterMax) {
+                    alert('you win');
+                    return
+                }
+                //check against used answers for dubs
+                for (i = 0; i < usedCombos.length; i++) {
+
+                    if (usedCombos[i] == curValueStr) {
+                        chooseProblem()
+                    }
+                }
+
+                //if dup, pick a different problem
+                //also know how many different picks you should make
+
+
+                //print out the problem when you know it's new
+                printProblem(currentProblem);
+            };
+            var printProblem = function (problem) {
+                //targ.innerHTML = problem;
+                document.getElementById('firstNumberBox').innerHTML = problem[0];
+                document.getElementById('secondNumberBox').innerHTML = problem[1];
+
+
+            }
+
+            var problemToString = function (problem) {
+                var problemString = '';
+                for (i = 0; i < problem.length; i++) {
+
+                    problemString += problem[i];
+                    if (i < problem.length - 1) problemString += ' x '
+                }
+                return problemString
+            };
+
+            var removeClasses = function (className, element, newClass) {
+                $(element).removeClass(className);
+                if (newClass) {
                     
-                </p>
-            </div>
-        </div>
-    </div>
+                    $(element).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () { removeClass(newClass, element) });
+                    $(elment).addClass(newClass);
+                }
+            }
 
-    <div class="col s12 m2">
-        <div class="card white darken-1">
-            <div class="card-content black-text">
-                <p id="factorateBox">
-                    x
-                </p>
-            </div>
-        </div>
-    </div>
+            var calculate = function () {
+                if ((currentProblem[0] * currentProblem[1]).toString() == ab.value) {
+                    //alert(currentProblem[0] * currentProblem[1])
+                    //alert('right');
+                    $(firstBox).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () { removeClasses('bounceOutDown', firstBox, 'bounceInUp') });
+                    $(secondBox).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () { removeClasses('bounceOutDown', secondBox, 'bounceInUp') });
 
 
-    <div class="col s12 m3">
-        <div class="card white darken-1">
-            <div class="card-content black-text">
-                <p id="secondNumberBox" class="boxNumber">
-                    
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col s12 m2">
-        <div class="card white darken-1">
-            <div class="card-content black-text">
-                <p id="equals">
-                    =
-                </p>
-            </div>
-        </div>
-    </div>
+                    firstBox.classList.add('bounceOutDown');
+                    secondBox.classList.add('bounceOutDown');
 
 
- <div id="factorateBox"></div>
- <div id="SecondNumberBox"></div>
-</div>
-<div id="coinTotal"></div>
-<input type="text" id="answerBox" class="form-control" />	<button id="sendAnswer" class="btn btn-primary btn-lg">answer</button>
+  
 
-<div id="results"></div>
-</div>
-<div id="reacttest"></div>
+                    usedCombos.push(problemToString(currentProblem));
+                    coinCount++;
+                    coinCounter();
+                    chooseProblem();
+                    ab.value = '';
+                    ab.focus();
+                } else {
+                  //  alert(currentProblem[0] * currentProblem[1])
+                    //  alert('wrong');
+                    firstBox.classList.add('swing');
+                    secondBox.classList.add('swing');
+                }
+            };
 
-<script>
-	
-	//helpers //
-	
-	Array.prototype.randomPosition = function () {
-    return this[Math.floor(Math.random() * this.length)]
-}
+            var coinCounter = function () {
+                document.getElementById('coinTotal').innerHTML = 'You Have ' + coinCount + ' coins';
+                localStorage.coinCount = coinCount;
+            };
 
-//end helpers//
+            sa.addEventListener('click', calculate);
+            document.getElementById('setValues').addEventListener('click', setRange);
 
-var td = document.getElementById('targetDiv');
-var results = document.getElementById('results');
-var topNumber = [9,10];
-var bottomNumber = [0, 1];
-
-var ab = document.getElementById('answerBox');
-var usedCombos = [];
-var sa = document.getElementById('sendAnswer');
-var currentProblem = [];
-
-if(!localStorage.coinCount) localStorage.setItem('coinCount', 0);
-var coinCount = localStorage.coinCount;
-    //set listener to button so that you can set range
-
-var setRange = function () {
-    //set up numbers from DOM
-    var topNumFree = document.getElementById('topNumber').value.split(',');
-    var buttomNumFree = document.getElementById('bottomNumber').value.split(',');
-    topNumber = [];
-    for (var i = 0;topNumFree.length > 0; i++) {
-        topNumber.push(topNumFree.pop());
-    }
-    bottomNumber = [];
-    for (var i = 0; buttomNumFree.length > 0; i++) {
-        bottomNumber.push(buttomNumFree.pop());
-    }
-
-    usedCombos = [];
-    chooseProblem();
-
-
-};
-
-    //this is where we pick the values for the problem
-var setValueArray = function () {
-    //make random number picks
-    currentProblem = [];
-    currentProblem.push(topNumber.randomPosition());
-    currentProblem.push(bottomNumber.randomPosition());
-    return currentProblem;
-}
-
-var chooseProblem = function(){
-
-
-    //add loop counter to make sure you get them all but don't loop for ever
-	//var loopCounter = 0;
-	var counterMax = topNumber.length*bottomNumber.length;
-    //loop through the used answers to make sure none of them match the current one
-    //you will need to reset toe used answers array if you want to start a new round
-        //pick a problem
-	    var curValue = [];
-	    curValue = setValueArray(); 
-        //var curValueStr = '';
-        //turn values into sring to compare to used answers
-	    curValueStr = problemToString(curValue);
-    //you know you have tried all the options when your array is the same size as the option set
-	    if (usedCombos.length == counterMax) {
-	        alert('you win');
-            return
-	    }
-        //check against used answers for dubs
-	    for (i = 0; i < usedCombos.length; i++) {
-
-	        if (usedCombos[i] == curValueStr) {
-	            chooseProblem()
-	        }
-	    }
-
-    //if dup, pick a different problem
-    //also know how many different picks you should make
-
-
-    //print out the problem when you know it's new
-    printProblem(currentProblem);
-};
-var printProblem = function(problem){
-    //targ.innerHTML = problem;
-    document.getElementById('firstNumberBox').innerHTML = problem[0];
-    document.getElementById('secondNumberBox').innerHTML = problem[1];
-		
-	
-}
-
-var problemToString = function(problem){
-	var problemString = '';
-	for(i=0;i<problem.length;i++){
-		
-		problemString += problem[i];
-		if(i<problem.length-1) problemString += ' x '
-	}	
-	return problemString
-};
-var calculate = function(){
-	if((currentProblem[0]*currentProblem[1]).toString() == ab.value){
-		alert(currentProblem[0]*currentProblem[1])
-		alert('right');
-		usedCombos.push(problemToString(currentProblem));
-		coinCount ++;
-		coinCounter();
-		chooseProblem();
-		ab.value = '';
-		ab.focus();
-	}else{
-		alert(currentProblem[0]*currentProblem[1])
-		alert('wrong');
-	}
-};
-
-var coinCounter = function () {
-    document.getElementById('coinTotal').innerHTML = 'You Have ' + coinCount + ' coins';
-    localStorage.coinCount = coinCount;
-};
-
-sa.addEventListener('click', calculate);
-document.getElementById('setValues').addEventListener('click', setRange);
-
-//ab.addEventListener('submit', calculate);
-//setups
-chooseProblem();
-coinCounter();
-ab.focus();
-</script>	
+            //ab.addEventListener('submit', calculate);
+            //setups
+            chooseProblem();
+            coinCounter();
+            ab.focus();
+        </script>
 
 </body>
 	
