@@ -35,6 +35,18 @@
         position: absolute;
         top:0;
         }
+        #firstBox {
+        transform:rotate(5deg)
+        }
+        #secondBox {
+        transform: rotate(-5deg)
+        }
+        #youWin {
+        position: absolute;
+        top: 20%;
+        z-index:100;    
+
+        }
     </style>
 
 
@@ -72,8 +84,10 @@
         </div>
 
         <div class="section active" id="learning">
+            <div  class=" container center "><div id="youWin" class="row animated hide"><img class="responsive-img" src="win.png" /></div></div>
+            <div class="container center  " id="problemSection">
+                
 
-            <div class="container center  ">
                 <div class="row">
                     <div class="col s12 m3">
                         <div class="card white darken-1 animated" id="firstBox">
@@ -86,7 +100,7 @@
                     </div>
 
                     <div class="col s12 m1 ">
-                        <div class="card white darken-1">
+                        <div class="darken-1">
                             <div class="card-content black-text">
                                 <p id="factorateBox" class="factorBox">
                                     x
@@ -107,7 +121,7 @@
                     </div>
 
                     <div class="col s12 m1">
-                        <div class="card white darken-1">
+                        <div class="darken-1">
                             <div class="card-content black-text">
                                 <p id="equals" class="factorBox">
                                     =
@@ -251,7 +265,10 @@
                 curValueStr = problemToString(curValue);
                 //you know you have tried all the options when your array is the same size as the option set
                 if (usedCombos.length == counterMax) {
-                    alert('you win');
+                    //alert('you win');
+                    $('#youWin').addClass('bounceIn');
+                    $('#youWin').removeClass('hide');
+                    $('#problemSection').addClass('hide');
                     return
                 }
                 //check against used answers for dubs
@@ -287,40 +304,43 @@
                 return problemString
             };
 
-            var removeClasses = function (className, element, newClass) {
-                $(element).removeClass(className);
-                if (newClass) {
-                    
-                    $(element).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () { removeClass(newClass, element) });
-                    $(elment).addClass(newClass);
-                }
-            }
 
             var calculate = function () {
                 if ((currentProblem[0] * currentProblem[1]).toString() == ab.value) {
-                    //alert(currentProblem[0] * currentProblem[1])
-                    //alert('right');
-                    $(firstBox).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () { removeClasses('bounceOutDown', firstBox, 'bounceInUp') });
-                    $(secondBox).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () { removeClasses('bounceOutDown', secondBox, 'bounceInUp') });
-
 
                     firstBox.classList.add('bounceOutDown');
                     secondBox.classList.add('bounceOutDown');
 
 
-  
+                    setTimeout(function () {
+                        $(firstBox).removeClass('bounceOutDown');
+                        $(secondBox).removeClass('bounceOutDown');
+                        usedCombos.push(problemToString(currentProblem));
+                        coinCount++;
+                        coinCounter();
+                        chooseProblem();
+                        ab.value = '';
+                        ab.focus();
 
-                    usedCombos.push(problemToString(currentProblem));
-                    coinCount++;
-                    coinCounter();
-                    chooseProblem();
-                    ab.value = '';
-                    ab.focus();
+                        $(firstBox).addClass('bounceInUp');
+                        $(secondBox).addClass('bounceInUp');
+                        setTimeout(function () {
+                            $(firstBox).removeClass('bounceInUp');
+                            $(secondBox).removeClass('bounceInUp');
+                        }, 1000)
+
+                    }, 1500);
+
                 } else {
                   //  alert(currentProblem[0] * currentProblem[1])
                     //  alert('wrong');
-                    firstBox.classList.add('swing');
-                    secondBox.classList.add('swing');
+                    $(firstBox).addClass('swing');
+                    $(secondBox).addClass('swing');
+
+                    setTimeout(function () {
+                        $(firstBox).removeClass('swing');
+                        $(secondBox).removeClass('swing');
+                    }, 1000)
                 }
             };
 
@@ -330,8 +350,29 @@
             };
 
             sa.addEventListener('click', calculate);
+            $(document).keypress(function (e) {
+                if (e.which == 13) {
+                    calculate()
+                }
+            });
+
+
+
             document.getElementById('setValues').addEventListener('click', setRange);
 
+            $('#youWin img').click(function () {
+                //$('#youWin').removeClass('bounceIn');
+                $('#youWin').addClass('hide');
+                $('#problemSection').removeClass('hide');
+                usedCombos = [];
+                currentProblem = [];
+                chooseProblem();
+                coinCounter();
+                ab.focus();
+               
+
+
+            });
             //ab.addEventListener('submit', calculate);
             //setups
             chooseProblem();
