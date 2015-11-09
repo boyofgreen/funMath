@@ -99,7 +99,7 @@
                         </div>
                     </div>
 
-                    <div class="col s12 m1 ">
+                    <div class="col s6 m1 ">
                         <div class="darken-1">
                             <div class="card-content black-text">
                                 <p id="factorateBox" class="factorBox">
@@ -110,7 +110,7 @@
                     </div>
 
 
-                    <div class="col s12 m3">
+                    <div class="col s6 m3">
                         <div class="card white darken-1 animated" id="secondBox">
                             <div class="card-content black-text">
                                 <p id="secondNumberBox" class="boxNumber ">
@@ -120,7 +120,7 @@
                         </div>
                     </div>
 
-                    <div class="col s12 m1">
+                    <div class="col s6 m1">
                         <div class="darken-1">
                             <div class="card-content black-text">
                                 <p id="equals" class="factorBox">
@@ -130,7 +130,7 @@
                         </div>
                     </div>
 
-                    <div class="col s12 m3">
+                    <div class="col s6 m3">
                         <div class="card white darken-1">
                             <div class="card-content black-text">
                                 <p id="answerCard" class="answerBox">
@@ -152,18 +152,33 @@
                             <a href="/#firstPage">  setup</a>
                         </div>
                         <div class="chip" id="play">
-                            play
+                          <a href="/#thirdPage">play</a>  
                         </div>
                     </div>
                 </div>
 
 
-                <div id="results"></div>
             </div>
         </div>
+        <div id="gameing" class="section">
+
+            <div class="center ">
+
+                <div id="c2canvasdiv">
+
+                    <!-- The canvas the project will render to.  If you change its ID, don't forget to change the
+            ID the runtime looks for in the jQuery events above (ready() and cr_sizeCanvas()). -->
+                    <canvas id="c2canvas" width="854" height="600" class="responsive-img"> </canvas>
+
+                </div>
+            </div>
+
+
+
+            </div>
 </div>
 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="jquery-2.1.1.min.js"></script>
         <!-- This following line is only necessary in the case of using the plugin option `scrollOverflow:true` -->
         <script type="text/javascript" src="vendors/jquery.slimscroll.min.js"></script>
 
@@ -175,10 +190,50 @@
 
         <!-- This following line is optional. Only necessary if you use the option css3:false and you want to use other easing effects rather than "linear", "swing" or "easeInOutCubic". -->
         <script src="vendors/jquery.easings.min.js"></script>
+
+    <!-- The runtime script.  You can rename it, but don't forget to rename the reference here as well.
+    This file will have been minified and obfuscated if you enabled "Minify script" during export. -->
+    <script src="c2runtime.js"></script>
+
         <script>
             $(document).ready(function () {
                 $('#fullpage').fullpage({
-                    anchors: ['firstPage', 'secondPage']
+                    anchors: ['firstPage', 'secondPage', 'thirdPage'],
+                    afterLoad: function(anchorLink, index){
+                        var loadedSection = $(this);
+
+                        //using index
+                        if(index == 3){
+                    //        alert("Section 3 ended loading");
+                        }
+
+                        //using anchorLink
+                        if (anchorLink == 'thirdPage') {
+                            cr_createRuntime("c2canvas");
+                        }
+
+                        //when go back to center page, update from local storage in case it has changed
+
+                        if (anchorLink == 'secondPage') {
+
+                            localforage.getItem('total', function (err, value) {
+                                if (err) {
+                                    localforage.setItem('total', 33);
+                                    coinCount = 33;
+                                    coinCounter();
+                                    //  cr_createRuntime("c2canvas");
+                                } else {
+                                    coinCount = value;
+                                    coinCounter();
+                                    //  cr_createRuntime("c2canvas");
+                                }
+                            });
+
+
+                        }
+
+                    }
+
                 });
             });
 
@@ -208,7 +263,6 @@
             //end helpers//
 
             var td = document.getElementById('targetDiv');
-            var results = document.getElementById('results');
             var topNumber = [9, 10];
             var bottomNumber = [0, 1];
 
@@ -217,8 +271,22 @@
             var sa = document.getElementById('sendAnswer');
             var currentProblem = [];
 
-            if (!localStorage.coinCount) localStorage.setItem('coinCount', 0);
-            var coinCount = localStorage.coinCount;
+            //if (!localStorage.coinCount) localStorage.setItem('coinCount', 0);
+            var coinCount = '...counting'; //localStorage.coinCount;
+
+            localforage.getItem('total', function (err, value) {
+                if (err) {
+                    localforage.setItem('total', 33);
+                    coinCount = 33;
+                    coinCounter();
+                  //  cr_createRuntime("c2canvas");
+                } else {
+                    coinCount = value;
+                    coinCounter();
+                  //  cr_createRuntime("c2canvas");
+                }
+            });
+
             //set listener to button so that you can set range
 
             var setRange = function () {
@@ -236,7 +304,9 @@
 
                 usedCombos = [];
                 chooseProblem();
-
+                //add in the link to scroll down
+                $.fn.fullpage.moveTo(2
+                    );
 
             };
 
@@ -346,7 +416,9 @@
 
             var coinCounter = function () {
                 document.getElementById('coinTotal').innerHTML = 'You Have ' + coinCount + ' coins';
-                localStorage.coinCount = coinCount;
+                // localStorage.coinCount = coinCount;
+                localforage.setItem('total', coinCount);
+
             };
 
             sa.addEventListener('click', calculate);
@@ -379,6 +451,43 @@
             coinCounter();
             ab.focus();
         </script>
+
+
+
+
+    <script>
+        //game launch
+
+  
+
+
+		// Size the canvas to fill the browser viewport.
+		jQuery(window).resize(function() {
+			cr_sizeCanvas(jQuery(window).width(), jQuery(window).height());
+		});
+
+		// Start the Construct 2 project running on window load.
+		jQuery(document).ready(function ()
+		{
+			// Create new runtime using the c2canvas
+			//cr_createRuntime("c2canvas");
+		});
+
+		// Pause and resume on page becoming visible/invisible
+		function onVisibilityChanged() {
+			if (document.hidden || document.mozHidden || document.webkitHidden || document.msHidden)
+				cr_setSuspended(true);
+			else
+				cr_setSuspended(false);
+		};
+
+		document.addEventListener("visibilitychange", onVisibilityChanged, false);
+		document.addEventListener("mozvisibilitychange", onVisibilityChanged, false);
+		document.addEventListener("webkitvisibilitychange", onVisibilityChanged, false);
+		document.addEventListener("msvisibilitychange", onVisibilityChanged, false);
+
+
+    </script>
 
 </body>
 	
