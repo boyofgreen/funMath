@@ -26,9 +26,13 @@
             "src": "/assets/smalllogo.png",
             "sizes": "30x30"
         },
-        {
-            "src": "/assets/logo44.png",
-            "sizes": "44x44"
+      {
+        "src": "/assets/logo44.png",
+        "sizes": "44x44"
+      },
+      {
+            "src": "/assets/splashscreen.png",
+            "sizes": "620x300"
         }
     ],
     "splash_screens": [
