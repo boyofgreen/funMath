@@ -285,9 +285,59 @@
             }
 
 
-
             //end helpers//
 
+            //set up web audio context //
+            var context, winSound, wrongSound, inSound, outSound, rightSound;
+
+                window.AudioContext = window.AudioContext || window.webkitAudioContext;
+                context = new AudioContext();
+
+                var sounds = [
+                       'sounds/cartoon_fast_whoosh_good_for_karate_chop_other_fast_movement_or_swipe_004.mp3',
+                       'sounds/cartoon_fast_whoosh_good_for_karate_chop_other_fast_movement_or_swipe_006.mp3',
+                       'sounds/comedy_accent_crash_and_burn.mp3',
+                       'sounds/comedy_single_toot_of_a_bicycle_horn.mp3',
+                       'sounds/small_bell_hotel_reception_or_elevator_ring_002.mp3'
+                ];
+
+
+
+                function loadSounds(url, ref) {
+                    var request = new XMLHttpRequest();
+                    request.open('GET', url, true);
+                    request.responseType = 'arraybuffer';
+
+                    // Decode asynchronously
+                    request.onload = function () {
+                        context.decodeAudioData(request.response, function (buffer) {
+                            if (ref === 'inSound') inSound = buffer;
+                            if (ref === 'outSound') outSound = buffer;
+                            if (ref === 'winSound') winSound = buffer;
+                            if (ref === 'wrongSound') wrongSound = buffer;
+                            if (ref === 'rightSound') rightSound = buffer;
+                        }, function (er) { console.log(er) });
+                    }
+                    request.send();
+                };
+
+
+                loadSounds(sounds[0], 'inSound');
+                loadSounds(sounds[1], 'outSound');
+                loadSounds(sounds[2], 'winSound');
+                loadSounds(sounds[3], 'wrongSound');
+                loadSounds(sounds[4], 'rightSound');
+
+                function playSound(buffer) {
+                    var source = context.createBufferSource(); // creates a sound source
+                    source.buffer = buffer;                    // tell the source which sound to play
+                    source.connect(context.destination);       // connect the source to the context's destination (the speakers)
+                    source.start(0);                           // play the source now
+                    // note: on older systems, may have to use deprecated noteOn(time);
+                }
+
+
+            
             var td = document.getElementById('targetDiv');
             var topNumber = [9, 10];
             var bottomNumber = [0, 1];
@@ -320,12 +370,11 @@
                 var topNumFree = document.getElementById('topNumber').value.split(',');
                 var buttomNumFree = document.getElementById('bottomNumber').value.split(',');
 
-
-
+                if (topNumFree[0] == "" || buttomNumFree[0] == "") {
+                    return
+                }
                 topNumber = [];
                 for (var i = 0; topNumFree.length > 0;) {
-                   // var test = topNumFree[i].indexOf('-') !== -1;
-                    var test2 = topNumFree[i].toString();
                     if (topNumFree[i].indexOf('-') !== -1) {
                         
                         var range = topNumFree[i].split('-');
@@ -343,12 +392,29 @@
                         topNumber.push(topNumFree.shift(0));
                     }
                 }
-                console.log('topnumber');
-                console.log(topNumber);
+
                 bottomNumber = [];
-                for (var i = 0; buttomNumFree.length > 0; i++) {
-                    bottomNumber.push(buttomNumFree.pop());
+                for (var i = 0; buttomNumFree.length > 0;) {
+                    if (buttomNumFree[i].indexOf('-') !== -1) {
+
+                        var range = buttomNumFree[i].split('-');
+                        bottomNumber.push(parseFloat(range[0]));
+
+                        var b = parseFloat(range[0]);
+                        while (b < parseFloat(range[1])) {
+                            b += 1;
+                            bottomNumber.push(b);
+                        }
+                        var looseit = buttomNumFree.shift(0);
+
+                    } else {
+
+                        bottomNumber.push(buttomNumFree.shift(0));
+                    }
                 }
+               // for (var i = 0; buttomNumFree.length > 0; i++) {
+                //    bottomNumber.push(buttomNumFree.pop());
+               // }
 
                 usedCombos = [];
                 chooseProblem();
@@ -387,6 +453,11 @@
                     $('#youWin').addClass('bounceIn');
                     $('#youWin').removeClass('hide');
                     $('#problemSection').addClass('hide');
+                    playSound(winSound);
+                    //bonus 10 points for winning the round
+                    coinCount+= 10;
+                    coinCounter();
+
                     return
                 }
                 //check against used answers for dubs
@@ -428,6 +499,8 @@
 
                     firstBox.classList.add('bounceOutDown');
                     secondBox.classList.add('bounceOutDown');
+                    playSound(rightSound);
+                    setTimeout(function () { playSound(inSound); }, 500);
 
 
                     setTimeout(function () {
@@ -442,6 +515,7 @@
 
                         $(firstBox).addClass('bounceInUp');
                         $(secondBox).addClass('bounceInUp');
+                        setTimeout(function () { playSound(outSound); }, 500);
                         setTimeout(function () {
                             $(firstBox).removeClass('bounceInUp');
                             $(secondBox).removeClass('bounceInUp');
@@ -454,6 +528,7 @@
                     //  alert('wrong');
                     $(firstBox).addClass('swing');
                     $(secondBox).addClass('swing');
+                    playSound(wrongSound);
 
                     setTimeout(function () {
                         $(firstBox).removeClass('swing');
