@@ -34,7 +34,7 @@
     "splash_screens": [
         {
             "src": "/assets/splashscreen.png",
-            "sizes": "150x150"
+            "sizes": "620x300"
         }
     ]
 }
