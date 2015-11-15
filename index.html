@@ -3,8 +3,8 @@
 <head>
     <!-- Latest compiled and minified CSS -->
     <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/materialize.min.css">
+    <xlink href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="jquery.fullPage.css" />
 
   
@@ -47,13 +47,36 @@
         z-index:100;    
 
         }
+
+        body {
+        background-image: url('images/cloudbg.png'); 
+        background-position: center; 
+        background-attachment: fixed; 
+        min-height:100%; 
+        background-size:contain;
+        xbackground-color: rgba(0,0,22,.5)
+        
+        
+        }
+
+        #c2canvasdiv input[type=button] {
+            opacity: .01;
+        }
+
+        #c2canvasdiv input[type=text] {
+        font-size:1.4em !important;
+        color:#f4d635;
+        border-bottom:none;
+        }
+
     </style>
 
 
 
     <title>math game</title>
 </head>
-<body>
+<body style="">
+
     <div id="fullpage" class="fullpage-wrapper">
         <div class="section" id="settings">
 
@@ -186,10 +209,10 @@
 
   
     <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
+    <script src="materialize.min.js"></script>
 
         <!-- This following line is optional. Only necessary if you use the option css3:false and you want to use other easing effects rather than "linear", "swing" or "easeInOutCubic". -->
-        <script src="vendors/jquery.easings.min.js"></script>
+        <xscript src="vendors/jquery.easings.min.js"></xscript>
 
     <!-- The runtime script.  You can rename it, but don't forget to rename the reference here as well.
     This file will have been minified and obfuscated if you enabled "Minify script" during export. -->
@@ -204,12 +227,13 @@
 
                         //using index
                         if(index == 3){
-                    //        alert("Section 3 ended loading");
+                    //        alert("Section 3 ended ");
                         }
 
                         //using anchorLink
                         if (anchorLink == 'thirdPage') {
                             cr_createRuntime("c2canvas");
+                            cr_setSuspended(false);
                         }
 
                         //when go back to center page, update from local storage in case it has changed
@@ -228,7 +252,7 @@
                                     //  cr_createRuntime("c2canvas");
                                 }
                             });
-
+                            cr_setSuspended(true);
 
                         }
 
@@ -259,6 +283,8 @@
             Array.prototype.randomPosition = function () {
                 return this[Math.floor(Math.random() * this.length)]
             }
+
+
 
             //end helpers//
 
@@ -293,10 +319,32 @@
                 //set up numbers from DOM
                 var topNumFree = document.getElementById('topNumber').value.split(',');
                 var buttomNumFree = document.getElementById('bottomNumber').value.split(',');
+
+
+
                 topNumber = [];
-                for (var i = 0; topNumFree.length > 0; i++) {
-                    topNumber.push(topNumFree.pop());
+                for (var i = 0; topNumFree.length > 0;) {
+                   // var test = topNumFree[i].indexOf('-') !== -1;
+                    var test2 = topNumFree[i].toString();
+                    if (topNumFree[i].indexOf('-') !== -1) {
+                        
+                        var range = topNumFree[i].split('-');
+                        topNumber.push(parseFloat(range[0]));
+
+                        var b = parseFloat(range[0]);
+                        while (b < parseFloat(range[1])) {
+                              b += 1;
+                              topNumber.push(b);
+                          }
+                         var looseit = topNumFree.shift(0);
+
+                    } else {
+
+                        topNumber.push(topNumFree.shift(0));
+                    }
                 }
+                console.log('topnumber');
+                console.log(topNumber);
                 bottomNumber = [];
                 for (var i = 0; buttomNumFree.length > 0; i++) {
                     bottomNumber.push(buttomNumFree.pop());

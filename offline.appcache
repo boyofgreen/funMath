@@ -1,5 +1,5 @@
 ﻿CACHE MANIFEST
-#1447043161
+#1447521898
 data.js
 c2runtime.js
 jquery-2.1.1.min.js
@@ -18,6 +18,9 @@ images/turtle-sheet0.png
 images/turtle-sheet1.png
 images/turtle-sheet2.png
 images/doghouse-sheet0.png
+images/newbg-sheet0.png
+images/grasslayer.png
+images/coinicon-sheet0.png
 icon-16.png
 icon-32.png
 icon-114.png
