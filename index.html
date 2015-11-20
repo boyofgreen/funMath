@@ -5,7 +5,7 @@
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="jquery.fullPage.css" />
-	<link rel="manifest" href="manifest.json" />
+	<link rel="manifest" href="manifest2.json" />
 
 
 
@@ -217,8 +217,13 @@
     <script src="c2runtime.js"></script>
 
         <script>
+            var mathState;
+            if(document.location.href.match('addition')) mathState = 'addition';
+
+            if (mathState == 'addition') document.getElementById('factorateBox').innerHTML = '+';
+
             $(document).ready(function () {
-                $('#fullpage').fullpage({
+                $('#fullpage').fullpage({ 
                     anchors: ['firstPage', 'secondPage', 'thirdPage'],
                     afterLoad: function(anchorLink, index){
                         var loadedSection = $(this);
@@ -239,7 +244,7 @@
                         if (anchorLink == 'secondPage') {
 
                             localforage.getItem('total', function (err, value) {
-                                if (err) {
+                                if (err || isNaN(value) == true) {
                                     localforage.setItem('total', 33);
                                     coinCount = 33;
                                     coinCounter();
@@ -327,6 +332,7 @@
                 loadSounds(sounds[4], 'rightSound');
 
                 function playSound(buffer) {
+                   // return
                     var source = context.createBufferSource(); // creates a sound source
                     source.buffer = buffer;                    // tell the source which sound to play
                     source.connect(context.destination);       // connect the source to the context's destination (the speakers)
@@ -337,8 +343,8 @@
 
             
             var td = document.getElementById('targetDiv');
-            var topNumber = [9, 10];
-            var bottomNumber = [0, 1];
+            var topNumber = [1,2,3,4];
+            var bottomNumber = [1,2,3,4];
 
             var ab = document.getElementById('answerBox');
             var usedCombos = [];
@@ -493,7 +499,11 @@
 
 
             var calculate = function () {
-                if ((currentProblem[0] * currentProblem[1]).toString() == ab.value) {
+                var checkCorrect = (currentProblem[0] * currentProblem[1]).toString() == ab.value;
+                if (mathState == 'addition') {
+                    checkCorrect = (currentProblem[0] + currentProblem[1]).toString() == ab.value;
+                };
+                if (checkCorrect) {
 
                     firstBox.classList.add('bounceOutDown');
                     secondBox.classList.add('bounceOutDown');

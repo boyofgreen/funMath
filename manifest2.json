@@ -1,0 +1,44 @@
+{
+    "start_url": "http://mathpets.azurewebsites.net/?mode=addition",
+    "short_name": "Math Pets Addition",
+    "scope":"http://mathpets.azurewebsites.net",
+    "mjs_access_whitelist":[        {
+            "url": "http://mathpets.azurewebsites.net/*",
+            "apiAccess": "all"
+        },
+        {
+            "url": "https://mathpets.azurewebsites.net/*",
+            "apiAccess": "all"
+        }],
+    "display": "standalone",
+    "name": "Math Pets Addition",
+    "theme_color": "#3dc0f1",
+     "icons": [
+        {
+            "src": "/assets1/logo.png",
+            "sizes": "150x150"
+        },
+        {
+            "src": "/assets1/storelogo.png",
+            "sizes": "50x50"
+        },
+        {
+            "src": "/assets1/smalllogo.png",
+            "sizes": "30x30"
+        },
+      {
+        "src": "/assets1/logo44.png",
+        "sizes": "44x44"
+      },
+      {
+            "src": "/assets1/splashscreen.png",
+            "sizes": "620x300"
+        }
+    ],
+    "splash_screens": [
+        {
+            "src": "/assets1/splashscreen.png",
+            "sizes": "620x300"
+        }
+    ]
+}
