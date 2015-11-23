@@ -213,7 +213,14 @@
 
         <script>
             var mathState;
-            if(document.location.href.match('addition')) mathState = 'addition';
+            
+            //this is extra check that doesn't have to use URL for kindle fire
+            if (localStorage.getItem("mathState") !== null || document.location.href.match('addition')) {
+
+                mathState = 'addition';
+                localStorage.setItem("mathState", "addition");
+
+            }
 
             if (mathState == 'addition') document.getElementById('factorateBox').innerHTML = '+';
 
