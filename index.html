@@ -64,6 +64,14 @@
         border-bottom:none;
         }
 
+        #keyboard {
+        font-size:1.4em;
+        background-color: rgba(255, 255, 255, 0.5);
+        padding: 1em;
+        border: 1px solid white;
+        border-radius: .2em;
+        }
+
     </style>
 
 
@@ -103,6 +111,7 @@
 
         <div class="section active" id="learning">
             <div  class=" container center "><div id="youWin" class="row animated hide"><img class="responsive-img" src="win.png" /></div></div>
+
             <div class="container center  " id="problemSection">
                 
 
@@ -172,12 +181,33 @@
                         <div class="chip" id="play">
                           <a href="/#thirdPage">play</a>  
                         </div>
+                        <div class="chip" id="keyboard-btn">
+                            <a href="#">keyboard</a>
+                        </div>
                     </div>
                 </div>
 
 
             </div>
-        </div>
+            <div class=" container center ">
+                <div class="row hide animated" id="keyboard">
+                    <div class="col s1" ><button class="btn btn-large blue-grey">1</button></div>
+                    <div class="col s1" ><button class="btn btn-large blue-grey">2</button></div>
+                    <div class="col s1" ><button class="btn btn-large blue-grey">3</button></div>
+                    <div class="col s1" ><button class="btn btn-large blue-grey">4</button></div>
+                    <div class="col s1" ><button class="btn btn-large blue-grey">5</button></div>
+                    <div class="col s1" ><button class="btn btn-large blue-grey"   >6</button></div>
+                    <div class="col s1" ><button class="btn btn-large blue-grey">7</button></div>
+                    <div class="col s1" ><button class="btn btn-large blue-grey">8</button></div>
+                    <div class="col s1" ><button class="btn btn-large blue-grey">9</button> </div>
+                    <div class="col s1"><button class="btn btn-large blue-grey ">0</button></div>
+                    <div class="col s1" ><button class="btn btn-large red" actionKey="delete">&lArr;</button></div>
+
+                </div>
+
+
+            </div>
+            </div>
         <div id="gameing" class="section">
 
             <div class="center ">
@@ -210,7 +240,7 @@
     <!-- The runtime script.  You can rename it, but don't forget to rename the reference here as well.
     This file will have been minified and obfuscated if you enabled "Minify script" during export. -->
     <script src="c2runtime.js"></script>
-
+    
         <script>
             var mathState;
             
@@ -303,7 +333,8 @@
                        'sounds/cartoon_fast_whoosh_good_for_karate_chop_other_fast_movement_or_swipe_006.mp3',
                        'sounds/comedy_accent_crash_and_burn.mp3',
                        'sounds/comedy_single_toot_of_a_bicycle_horn.mp3',
-                       'sounds/small_bell_hotel_reception_or_elevator_ring_002.mp3'
+                       'sounds/small_bell_hotel_reception_or_elevator_ring_002.mp3',
+                       'sounds/office_stapler_single_sound_manual.mp3'
                 ];
 
 
@@ -321,6 +352,7 @@
                             if (ref === 'winSound') winSound = buffer;
                             if (ref === 'wrongSound') wrongSound = buffer;
                             if (ref === 'rightSound') rightSound = buffer;
+                            if (ref === 'keySound') keySound = buffer;
                         }, function (er) { console.log(er) });
                     }
                     request.send();
@@ -332,7 +364,7 @@
                 loadSounds(sounds[2], 'winSound');
                 loadSounds(sounds[3], 'wrongSound');
                 loadSounds(sounds[4], 'rightSound');
-
+                loadSounds(sounds[5], 'keySound');
                 function playSound(buffer) {
                    // return
                     var source = context.createBufferSource(); // creates a sound source
@@ -621,7 +653,54 @@
 
 
     </script>
+    <script>
+        //keyboard code;
 
+        var kbButton = document.getElementById('keyboard-btn');
+        var keyboard = document.getElementById('keyboard');
+
+        kbButton.addEventListener('click', function () {
+            console.log('in the keybaord event')
+            if ($(keyboard).hasClass('hide')) {
+                setTimeout(function () { playSound(inSound); }, 500);
+                console.log('show the keyboard');
+                $(keyboard).addClass('bounceInUp');
+                $(keyboard).removeClass('hide');
+                ab.setAttribute('readonly')
+                setTimeout(function () {
+                    $(keyboard).removeClass('bounceInUp');
+                }, 1000)
+
+            }else{
+                // $(keyboard).addClass('hide');
+                setTimeout(function () { playSound(outSound); }, 500);
+                $(keyboard).addClass('bounceOut');
+                ab.removeAttribute('readonly');
+                setTimeout(function () {
+                    $(keyboard).addClass('hide');
+                    $(keyboard).removeClass('bounceOut');
+                }, 1000)
+            }
+
+           
+
+        });
+
+        //set listeners for keyboard
+
+        keyboard.addEventListener('click', function (e) {
+            console.log(e.target);
+            playSound(keySound);
+            if (e.target.getAttribute('actionKey') === 'delete') {
+                ab.value = '';
+            } else {
+                ab.value += e.target.innerHTML;
+            }
+        }, true);
+
+
+
+    </script>
 </body>
 	
 </html>
