@@ -7,8 +7,8 @@
     <link rel="stylesheet" type="text/css" href="jquery.fullPage.css" />
 	<link rel="manifest" href="manifest2.json" />
     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
-
-
+    <!-- adding vorlon for testing on all the differetn devices-->
+    <script src="http://vorlonjsdd11.azurewebsites.net/vorlon.js"></script>
     <link href="animate.css" rel="stylesheet" />
     <style>
         html {
@@ -693,10 +693,19 @@
         keyboard.addEventListener('click', function (e) {
             console.log(e.target);
             playSound(keySound);
-            if (e.target.getAttribute('actionKey') === 'delete') {
+            var targ = e.target;
+            if (targ.innerHTML.match('button')) {
+                targ = targ.children[0];
+                //this could probably be a loop but since it can only be two layers deep this should work everywereh
+                if (targ.innerHTML.match('button')) {
+                    targ = targ.children[0];
+                }
+            }
+
+                if (targ.getAttribute('actionKey') === 'delete') {
                 ab.value = '';
             } else {
-                ab.value += e.target.innerHTML;
+                    ab.value += targ.innerHTML;
             }
         }, true);
 
