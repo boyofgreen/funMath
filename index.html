@@ -542,6 +542,7 @@
                     firstBox.classList.add('bounceOutDown');
                     secondBox.classList.add('bounceOutDown');
                     playSound(rightSound);
+                    sa.setAttribute('disabled');
                     setTimeout(function () { playSound(inSound); }, 500);
 
 
@@ -554,7 +555,8 @@
                         chooseProblem();
                         ab.value = '';
                         ab.focus();
-
+                        //turn button back on
+                        sa.removeAttribute('disabled');
                         $(firstBox).addClass('bounceInUp');
                         $(secondBox).addClass('bounceInUp');
                         setTimeout(function () { playSound(outSound); }, 500);
