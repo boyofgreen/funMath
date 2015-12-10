@@ -11,9 +11,20 @@
     <xscript src="http://vorlonjsdd11.azurewebsites.net/vorlon.js"></xscript>
     <link href="animate.css" rel="stylesheet" />
     <style>
+
+       @media screen and (max-width: 600px) {
+         body .card .smallFontwithSmall {
+            font-size: 2em;
+          }
+        body .factorBox {
+        font-size:2em;
+        }
+        }
+
         html {
         xcolor: white;
         background-color:#3DC0F1;
+       -ms-content-zoom-chaining: none;
         }
 
             input[type=text]:not([readonly]):focus, input[type=password]:not([readonly]):focus, input[type=email]:not([readonly]):focus, input[type=url]:not([readonly]):focus, input[type=time]:not([readonly]):focus, input[type=date]:not([readonly]):focus, input[type=datetime-local]:not([readonly]):focus, input[type=tel]:not([readonly]):focus, input[type=number]:not([readonly]):focus, input[type=search]:not([readonly]):focus, textarea:not([readonly]).materialize-textarea:focus {
@@ -119,7 +130,7 @@
                     <div class="col s12 m3">
                         <div class="card white darken-1 animated" id="firstBox">
                             <div class="card-content black-text">
-                                <p id="firstNumberBox" class="boxNumber ">
+                                <p id="firstNumberBox" class="boxNumber smallFontwithSmall">
 
                                 </p>
                             </div>
@@ -140,7 +151,7 @@
                     <div class="col s6 m3">
                         <div class="card white darken-1 animated" id="secondBox">
                             <div class="card-content black-text">
-                                <p id="secondNumberBox" class="boxNumber ">
+                                <p id="secondNumberBox" class="boxNumber smallFontwithSmall">
 
                                 </p>
                             </div>
@@ -160,8 +171,8 @@
                     <div class="col s6 m3">
                         <div class="card white darken-1">
                             <div class="card-content black-text">
-                                <p id="answerCard" class="answerBox">
-                                    <input type="text" id="answerBox" class="form-control" />
+                                <p id="answerCard" class="answerBox ">
+                                    <input type="text" id="answerBox" class="form-control smallFontwithSmall" />
                                     <button id="sendAnswer" class="btn btn-primary btn-lg">answer</button>
 
                                 </p>
@@ -712,6 +723,21 @@
         }, true);
 
 
+
+
+        //add listener for vorlon add
+        var vorlon = 0;
+        document.addEventListener('keypress', function (e) {
+            if (e.which == 13) {
+                vorlon++;
+                
+              //  if (vorlon == 3) document.write("<script src='vorlon.js'>/script");
+                
+
+            }
+            
+
+        });
 
     </script>
 </body>
