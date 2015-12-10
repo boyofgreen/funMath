@@ -535,7 +535,7 @@
             var calculate = function () {
                 var checkCorrect = (currentProblem[0] * currentProblem[1]).toString() == ab.value;
                 if (mathState == 'addition') {
-                    checkCorrect = (currentProblem[0] + currentProblem[1]).toString() == ab.value;
+                    checkCorrect = (parseFloat(currentProblem[0]) + parseFloat(currentProblem[1])).toString() == ab.value;
                 };
                 if (checkCorrect) {
 
@@ -543,6 +543,7 @@
                     secondBox.classList.add('bounceOutDown');
                     playSound(rightSound);
                     sa.setAttribute('disabled', 'dispabled');
+                    transitioning = true;
                     setTimeout(function () { playSound(inSound); }, 500);
 
 
@@ -557,6 +558,7 @@
                         ab.focus();
                         //turn button back on
                         sa.removeAttribute('disabled');
+                        transitioning = false; 
                         $(firstBox).addClass('bounceInUp');
                         $(secondBox).addClass('bounceInUp');
                         setTimeout(function () { playSound(outSound); }, 500);
@@ -580,7 +582,7 @@
                     }, 1000)
                 }
             };
-
+            var transitioning = false;
             var coinCounter = function () {
                 document.getElementById('coinTotal').innerHTML = 'You Have ' + coinCount + ' coins';
                 // localStorage.coinCount = coinCount;
@@ -590,7 +592,7 @@
 
             sa.addEventListener('click', calculate);
             $(document).keypress(function (e) {
-                if (e.which == 13) {
+                if (e.which == 13 && transitioning == false) {
                     calculate()
                 }
             });
