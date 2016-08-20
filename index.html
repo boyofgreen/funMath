@@ -1,97 +1,151 @@
 <!doctype html>
 <html>
+
 <head>
     <!-- Latest compiled and minified CSS -->
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="jquery.fullPage.css" />
-	<link rel="manifest" href="manifest2.json" />
+    <link rel="manifest" href="manifest2.json" />
     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
     <!-- adding vorlon for testing on all the differetn devices-->
     <xscript src="http://vorlonjsdd11.azurewebsites.net/vorlon.js"></xscript>
     <link href="animate.css" rel="stylesheet" />
     <style>
-
-       @media screen and (max-width: 600px) {
-         body .card .smallFontwithSmall {
-            font-size: 2em;
-          }
-        body .factorBox {
-        font-size:2em;
-        }
-        }
-
-        html {
-        xcolor: white;
-        background-color:#3DC0F1;
-       -ms-content-zoom-chaining: none;
-        }
-
-            input[type=text]:not([readonly]):focus, input[type=password]:not([readonly]):focus, input[type=email]:not([readonly]):focus, input[type=url]:not([readonly]):focus, input[type=time]:not([readonly]):focus, input[type=date]:not([readonly]):focus, input[type=datetime-local]:not([readonly]):focus, input[type=tel]:not([readonly]):focus, input[type=number]:not([readonly]):focus, input[type=search]:not([readonly]):focus, textarea:not([readonly]).materialize-textarea:focus {
-            border-color: yellow;
+        @media screen and (max-width: 600px) {
+            body .card .smallFontwithSmall {
+                font-size: 2em;
             }
-        .boxNumber, .answerBox input {
-        font-size:7em;
-        height: auto;
+            body .factorBox {
+                font-size: 2em;
+            }
         }
+        
+        html {
+            xcolor: white;
+            background-color: #3DC0F1;
+            -ms-content-zoom-chaining: none;
+        }
+        
+        input[type=text]:not([readonly]):focus,
+        input[type=password]:not([readonly]):focus,
+        input[type=email]:not([readonly]):focus,
+        input[type=url]:not([readonly]):focus,
+        input[type=time]:not([readonly]):focus,
+        input[type=date]:not([readonly]):focus,
+        input[type=datetime-local]:not([readonly]):focus,
+        input[type=tel]:not([readonly]):focus,
+        input[type=number]:not([readonly]):focus,
+        input[type=search]:not([readonly]):focus,
+        textarea:not([readonly]).materialize-textarea:focus {
+            border-color: yellow;
+        }
+        
+        .boxNumber,
+        .answerBox input, #enterTimeBox {
+            font-size: 7em;
+            height: auto;
+        }
+        
         .factorBox {
-            font-size:3em;
+            font-size: 3em;
         }
-
+        
         .groupBox {
-        position: absolute;
-        top:0;
+            position: absolute;
+            top: 0;
         }
+        
         #firstBox {
-        transform:rotate(5deg)
+            transform: rotate(5deg)
         }
+        
         #secondBox {
-        transform: rotate(-5deg)
+            transform: rotate(-5deg)
         }
+        
         #youWin {
-        position: absolute;
-        top: 20%;
-        z-index:100;    
-
+            position: absolute;
+            top: 20%;
+            z-index: 100;
         }
-
+        
         body {
-        background-image: url('images/cloudbg.png'); 
-        background-position: center; 
-        background-attachment: fixed; 
-        min-height:100%; 
-        background-size:contain;
-        
-        
+            background-image: url('images/cloudbg.png');
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100%;
+            background-size: contain;
         }
-
+        
         #c2canvasdiv input[type=button] {
             opacity: .01;
         }
-
+        
         #c2canvasdiv input[type=text] {
-        font-size:1.4em !important;
-        color:#f4d635;
-        border-bottom:none;
+            font-size: 1.4em !important;
+            color: #f4d635;
+            border-bottom: none;
         }
-
+        
         #keyboard {
-        font-size:1.4em;
-        background-color: rgba(255, 255, 255, 0.5);
-        padding: 1em;
-        border: 1px solid white;
-        border-radius: .2em;
+            font-size: 1.4em;
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 1em;
+            border: 1px solid white;
+            border-radius: .2em;
         }
-
+        .timerBar{
+ 
+            display: none;
+            flex-direction: row;
+            
+            width: 100%;
+            padding: 30px;
+            position: absolute;
+            border:1px solid #f4d635;
+            background-color: #f4d635;
+            top:0;
+            left:0;
+            font-size: 20px;
+            flex-wrap: wrap;
+            
+        }
+        .timerBar div{
+            margin-right: 2em;
+        }
+        #incorrect {
+            flex-grow:2;
+        }
+        
     </style>
 
 
 
     <title>math game</title>
 </head>
+
 <body style="">
 
     <div id="fullpage" class="fullpage-wrapper">
+        <div class="section" id="timer">
+          <div class="container center">
+            <div class="row">
+        
+                            <div id="timerCard" class="card white darken-1 animated">
+                                <div class="card-content black-text">
+                                    <div class="timeInputBox input-field  id="timeInputCard">
+                                        <label for="enterTimeBox">Set time for timer (in seconds)</label>
+                                        <input class="form-control smallFontwithSmall" id="enterTimeBox" type="number" value="30">
+                                        <a href="/#secondPage" class="btn btn-primary btn-lg" id="returnTimer">close</a>
+                                        <a href="#" class="btn btn-primary btn-lg" id="startTimer">start timer</a>
+                                    </div>
+                                </div>
+         
+                   </div> 
+                </div>
+            </div>
+        </div>
         <div class="section" id="settings">
 
             <div class="container center ">
@@ -121,10 +175,22 @@
         </div>
 
         <div class="section active" id="learning">
-            <div  class=" container center "><div id="youWin" class="row animated hide"><img class="responsive-img" src="win.png" /></div></div>
+            <div class="container timerBar z-depth-1 animated " >
+                          
+                           <div> number correct: </div>
+                           <div class="" id="correct">0</div>
+                           <div> number incorrect: </div>
+                           <div class="" id="incorrect">0</div> 
+                            <div class="timeRemain">Time Remaining: </div>
+                           <div class="" id="timerDisplay">0</div>
+            </div>
+
+            <div class=" container center ">
+                <div id="youWin" class="row animated hide"><img class="responsive-img" src="win.png" /></div>
+            </div>
 
             <div class="container center  " id="problemSection">
-                
+
 
                 <div class="row">
                     <div class="col s12 m3">
@@ -172,7 +238,7 @@
                         <div class="card white darken-1">
                             <div class="card-content black-text">
                                 <p id="answerCard" class="answerBox ">
-                                    <input type="text" id="answerBox" class="form-control smallFontwithSmall" />
+                                    <input type="number" id="answerBox" class="form-control smallFontwithSmall" />
                                     <button id="sendAnswer" class="btn btn-primary btn-lg">answer</button>
 
                                 </p>
@@ -190,10 +256,13 @@
                             <a href="/#firstPage">  setup</a>
                         </div>
                         <div class="chip" id="play">
-                          <a href="/#thirdPage">play</a>  
+                            <a href="/#thirdPage">play</a>
                         </div>
                         <div class="chip" id="keyboard-btn">
                             <a href="#">keyboard</a>
+                        </div>
+                        <div class="chip" id="timer-btn">
+                            <a href="/#zeroPage">speed drill</a>
                         </div>
                     </div>
                 </div>
@@ -202,23 +271,23 @@
             </div>
             <div class=" container center ">
                 <div class="row hide animated" id="keyboard">
-                    <div class="col s1" ><button class="btn btn-large blue-grey">1</button></div>
-                    <div class="col s1" ><button class="btn btn-large blue-grey">2</button></div>
-                    <div class="col s1" ><button class="btn btn-large blue-grey">3</button></div>
-                    <div class="col s1" ><button class="btn btn-large blue-grey">4</button></div>
-                    <div class="col s1" ><button class="btn btn-large blue-grey">5</button></div>
-                    <div class="col s1" ><button class="btn btn-large blue-grey"   >6</button></div>
-                    <div class="col s1" ><button class="btn btn-large blue-grey">7</button></div>
-                    <div class="col s1" ><button class="btn btn-large blue-grey">8</button></div>
-                    <div class="col s1" ><button class="btn btn-large blue-grey">9</button> </div>
+                    <div class="col s1"><button class="btn btn-large blue-grey">1</button></div>
+                    <div class="col s1"><button class="btn btn-large blue-grey">2</button></div>
+                    <div class="col s1"><button class="btn btn-large blue-grey">3</button></div>
+                    <div class="col s1"><button class="btn btn-large blue-grey">4</button></div>
+                    <div class="col s1"><button class="btn btn-large blue-grey">5</button></div>
+                    <div class="col s1"><button class="btn btn-large blue-grey">6</button></div>
+                    <div class="col s1"><button class="btn btn-large blue-grey">7</button></div>
+                    <div class="col s1"><button class="btn btn-large blue-grey">8</button></div>
+                    <div class="col s1"><button class="btn btn-large blue-grey">9</button> </div>
                     <div class="col s1"><button class="btn btn-large blue-grey ">0</button></div>
-                    <div class="col s1" ><button class="btn btn-large red" actionKey="delete">&lArr;</button></div>
+                    <div class="col s1"><button class="btn btn-large red" actionKey="delete">&lArr;</button></div>
 
                 </div>
 
 
             </div>
-            </div>
+        </div>
         <div id="gameing" class="section">
 
             <div class="center ">
@@ -234,26 +303,26 @@
 
 
 
-            </div>
-</div>
+        </div>
+    </div>
 
     <script type="text/javascript" src="jquery-2.1.1.min.js"></script>
 
-        <script type="text/javascript" src="jquery.fullPage.js"></script>
+    <script type="text/javascript" src="jquery.fullPage.js"></script>
 
-  
+
     <!-- Compiled and minified JavaScript -->
     <script src="materialize.min.js"></script>
 
-        <!-- This following line is optional. Only necessary if you use the option css3:false and you want to use other easing effects rather than "linear", "swing" or "easeInOutCubic". -->
-        <xscript src="vendors/jquery.easings.min.js"></xscript>
+    <!-- This following line is optional. Only necessary if you use the option css3:false and you want to use other easing effects rather than "linear", "swing" or "easeInOutCubic". -->
+    <xscript src="vendors/jquery.easings.min.js"></xscript>
 
     <!-- The runtime script.  You can rename it, but don't forget to rename the reference here as well.
     This file will have been minified and obfuscated if you enabled "Minify script" during export. -->
     <script src="c2runtime.js"></script>
-    
-        <script>
-            var mathState;
+
+    <script>
+        var mathState;
             
             //this is extra check that doesn't have to use URL for kindle fire
             if (localStorage.getItem("mathState") !== null || document.location.href.match('addition')) {
@@ -267,7 +336,7 @@
 
             $(document).ready(function () {
                 $('#fullpage').fullpage({ 
-                    anchors: ['firstPage', 'secondPage', 'thirdPage'],
+                    anchors: ['zeroPage', 'firstPage', 'secondPage', 'thirdPage'],
                     afterLoad: function(anchorLink, index){
                         var loadedSection = $(this);
 
@@ -319,12 +388,10 @@
 
 
             });
+    </script>
 
-        </script>
-
-        <script>
-
-            //helpers //
+    <script>
+        //helpers //
 
             Array.prototype.randomPosition = function () {
                 return this[Math.floor(Math.random() * this.length)]
@@ -334,7 +401,7 @@
             //end helpers//
 
             //set up web audio context //
-            var context, winSound, wrongSound, inSound, outSound, rightSound;
+            var context, winSound, wrongSound, inSound, outSound, rightSound, tickSound;
 
                 window.AudioContext = window.AudioContext || window.webkitAudioContext;
                 context = new AudioContext();
@@ -345,7 +412,8 @@
                        'sounds/comedy_accent_crash_and_burn.mp3',
                        'sounds/comedy_single_toot_of_a_bicycle_horn.mp3',
                        'sounds/small_bell_hotel_reception_or_elevator_ring_002.mp3',
-                       'sounds/office_stapler_single_sound_manual.mp3'
+                       'sounds/office_stapler_single_sound_manual.mp3',
+                       'sounds/tick.m4a'
                 ];
 
 
@@ -364,6 +432,7 @@
                             if (ref === 'wrongSound') wrongSound = buffer;
                             if (ref === 'rightSound') rightSound = buffer;
                             if (ref === 'keySound') keySound = buffer;
+                            if (ref === 'tick') tickSound = buffer;
                         }, function (er) { console.log(er) });
                     }
                     request.send();
@@ -376,6 +445,7 @@
                 loadSounds(sounds[3], 'wrongSound');
                 loadSounds(sounds[4], 'rightSound');
                 loadSounds(sounds[5], 'keySound');
+                loadSounds(sounds[6], 'tick');
                 function playSound(buffer) {
                    // return
                     var source = context.createBufferSource(); // creates a sound source
@@ -496,7 +566,12 @@
                 //var curValueStr = '';
                 //turn values into sring to compare to used answers
                 curValueStr = problemToString(curValue);
+                
+                //in timer mode we actually just want to clear the usedCombo if it is full
+                if (usedCombos.length == counterMax && timerMode == true) usedCombos = [];
+                
                 //you know you have tried all the options when your array is the same size as the option set
+               
                 if (usedCombos.length == counterMax) {
                     //alert('you win');
                     $('#youWin').addClass('bounceIn');
@@ -549,38 +624,12 @@
                     checkCorrect = (parseFloat(currentProblem[0]) + parseFloat(currentProblem[1])).toString() == ab.value;
                 };
                 if (checkCorrect) {
+                       moveOn(true)       
+                       if(timerMode == true)      answerRight(); 
 
-                    firstBox.classList.add('bounceOutDown');
-                    secondBox.classList.add('bounceOutDown');
-                    playSound(rightSound);
-                    sa.setAttribute('disabled', 'dispabled');
-                    transitioning = true;
-                    setTimeout(function () { playSound(inSound); }, 500);
-
-
-                    setTimeout(function () {
-                        $(firstBox).removeClass('bounceOutDown');
-                        $(secondBox).removeClass('bounceOutDown');
-                        usedCombos.push(problemToString(currentProblem));
-                        coinCount++;
-                        coinCounter();
-                        chooseProblem();
-                        ab.value = '';
-                        ab.focus();
-                        //turn button back on
-                        sa.removeAttribute('disabled');
-                        transitioning = false; 
-                        $(firstBox).addClass('bounceInUp');
-                        $(secondBox).addClass('bounceInUp');
-                        setTimeout(function () { playSound(outSound); }, 500);
-                        setTimeout(function () {
-                            $(firstBox).removeClass('bounceInUp');
-                            $(secondBox).removeClass('bounceInUp');
-                        }, 1000)
-
-                    }, 1500);
 
                 } else {
+                    if(timerMode == true)      answerWrong(); 
                   //  alert(currentProblem[0] * currentProblem[1])
                     //  alert('wrong');
                     $(firstBox).addClass('swing');
@@ -593,6 +642,44 @@
                     }, 1000)
                 }
             };
+            
+            //this is what happens when you win will also repurpose for move on in timer mode
+            var moveOn = function(success){
+                 firstBox.classList.add('bounceOutDown');
+                    secondBox.classList.add('bounceOutDown');
+                       if(success === true)  playSound(rightSound);
+                    sa.setAttribute('disabled', 'dispabled');
+                    transitioning = true;
+                    setTimeout(function () { playSound(inSound); }, 500);
+
+
+                    setTimeout(function () {
+                        $(firstBox).removeClass('bounceOutDown');
+                        $(secondBox).removeClass('bounceOutDown');
+                        usedCombos.push(problemToString(currentProblem));
+                       if(success === true) coinCount++;
+                      if(success === true)  coinCounter();
+                        chooseProblem();
+                               ab.value = '';
+                        ab.focus();
+                        //turn button back on
+                        sa.removeAttribute('disabled');
+                        transitioning = false; 
+                        $(firstBox).addClass('bounceInUp');
+                        $(secondBox).addClass('bounceInUp');
+                        setTimeout(function () { playSound(outSound); }, 500);
+                        setTimeout(function () {
+                            $(firstBox).removeClass('bounceInUp');
+                            $(secondBox).removeClass('bounceInUp');
+                            
+                                               
+                        }, 1000)
+
+                    }, 1500);
+                
+            };
+            
+            
             var transitioning = false;
             var coinCounter = function () {
                 document.getElementById('coinTotal').innerHTML = 'You Have ' + coinCount + ' coins';
@@ -607,6 +694,10 @@
                     calculate()
                 }
             });
+
+
+
+
 
 
 
@@ -630,7 +721,7 @@
             chooseProblem();
             coinCounter();
             ab.focus();
-        </script>
+    </script>
 
 
 
@@ -665,8 +756,6 @@
 		document.addEventListener("mozvisibilitychange", onVisibilityChanged, false);
 		document.addEventListener("webkitvisibilitychange", onVisibilityChanged, false);
 		document.addEventListener("msvisibilitychange", onVisibilityChanged, false);
-
-
     </script>
     <script>
         //keyboard code;
@@ -738,9 +827,8 @@
             
 
         });
-
     </script>
+    <script src="js/timer.js"></script>
 </body>
-	
+
 </html>
-	
