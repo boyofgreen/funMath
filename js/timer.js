@@ -1,7 +1,7 @@
 
 
 var timer, 
-timeLeft = 30000, 
+timeLeft = 60000, 
 numCorrect = 0, 
 numIncorrect = 0,
 timerBtn = document.querySelector('#startTimer'),
@@ -47,7 +47,7 @@ timerBtn.addEventListener('click', function(){
 
 var startTimer = function(){
  timerMode = true;
- timeLeft = (timeInput.value*1000) || 30000;
+ timeLeft = (timeInput.value*1000) || 60000;
  timer = setInterval(countDown, 1000);
 };
 
