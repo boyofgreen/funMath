@@ -6,7 +6,7 @@
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="jquery.fullPage.css" />
-    <link rel="manifest" href="manifest2.json" />
+    <link rel="manifest" href="manifest3.json" />
     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
     <!-- adding vorlon for testing on all the differetn devices-->
     <xscript src="http://vorlonjsdd11.azurewebsites.net/vorlon.js"></xscript>
@@ -359,16 +359,33 @@
 
     <script>
         var mathState;
+
+
+
             
             //this is extra check that doesn't have to use URL for kindle fire
-            if (localStorage.getItem("mathState") !== null || document.location.href.match('addition')) {
+            if ( document.location.href.match('addition') ) {
 
                 mathState = 'addition';
                 localStorage.setItem("mathState", "addition");
+            }
+            if ( document.location.href.match('subtraction') ) {
 
+                mathState = 'subtraction';
+                localStorage.setItem("mathState", "subtraction");
             }
 
+          if(localStorage.getItem("mathState") !== null){
+                mathState = localStorage.getItem("mathState")
+
+          }
+
+
+
+
+
             if (mathState == 'addition') document.getElementById('factorateBox').innerHTML = '+';
+            if (mathState == 'subtraction') document.getElementById('factorateBox').innerHTML = '-';
 
             $(document).ready(function () {
                 $('#fullpage').fullpage({ 
@@ -637,6 +654,17 @@
             };
             var printProblem = function (problem) {
                 //targ.innerHTML = problem;
+
+                if (mathState == 'subtraction') {
+
+                    if(problem[1] > problem[0]){
+                        var swaper = problem.pop();
+                        problem.unshift(swaper)
+
+
+
+                    }
+                }
                 document.getElementById('firstNumberBox').innerHTML = problem[0];
                 document.getElementById('secondNumberBox').innerHTML = problem[1];
 
@@ -658,6 +686,9 @@
                 var checkCorrect = (currentProblem[0] * currentProblem[1]).toString() == ab.value;
                 if (mathState == 'addition') {
                     checkCorrect = (parseFloat(currentProblem[0]) + parseFloat(currentProblem[1])).toString() == ab.value;
+                };
+              if (mathState == 'subtraction') {
+                    checkCorrect = (parseFloat(currentProblem[0]) - parseFloat(currentProblem[1])).toString() == ab.value;
                 };
                 if (checkCorrect) {
                        moveOn(true)       
