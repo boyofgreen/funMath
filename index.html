@@ -329,6 +329,7 @@
             <div class="center ">
 
                 <div id="c2canvasdiv">
+                    <a href="/#secondPage" id="backToMath"class="btn btn-primary" style="position: absolute; top: 10px; right: 10px">math</a>
 
                     <!-- The canvas the project will render to.  If you change its ID, don't forget to change the
             ID the runtime looks for in the jQuery events above (ready() and cr_sizeCanvas()). -->
@@ -537,10 +538,27 @@
 
             //set listener to button so that you can set range
 
-            var setRange = function () {
+            var setRange = function (remember) {
+                if(Array.isArray(remember)){
+                    var topNumFree = remember[0].split(',');
+                    var buttomNumFree = remember[1].split(',');
+
+                document.getElementById('topNumber').value = remember[0];
+                document.getElementById('bottomNumber').value = remember[1];
+
+                }else{
                 //set up numbers from DOM
+
                 var topNumFree = document.getElementById('topNumber').value.split(',');
                 var buttomNumFree = document.getElementById('bottomNumber').value.split(',');
+                var valueString = document.getElementById('topNumber').value + "|"+ document.getElementById('bottomNumber').value;
+                localforage.setItem("savedInputs", valueString);
+                
+
+                //set the range and input boxes
+
+
+                }
 
                 if (topNumFree[0] == "" || buttomNumFree[0] == "") {
                     return
@@ -746,6 +764,16 @@
                 
             };
             
+
+            //check for savedInputs and the fire from save if there
+            localforage.getItem('savedInputs', function (err, value) {
+                if(value == null) return
+                console.log('value$$$$$$$$', value)
+                var newAr = value.split("|")
+                setRange(newAr)
+
+            })
+
             
             var transitioning = false;
             var coinCounter = function () {
